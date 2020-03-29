@@ -1,12 +1,5 @@
-# 3. Реализовать функцию my_func(), которая принимает три позиционных аргумента, и
-# возвращает сумму наибольших двух аргументов. 23,11,55
+# 3)	Для чисел в пределах от 20 до 240 найти числа, кратные 20 или 21. Необходимо решить задание в одну строку.
+# Подсказка: использовать функцию range() и генератор.
 
-
-def my_func(numb1, numb2, numb3):
-    numb_list = [numb1, numb2, numb3]
-    numb_list.sort()
-    print(f'Сумма наибольших аргументов {numb_list[1]} и {numb_list[2]} - {sum(numb_list[1:3])}')
-
-
-numbers = input('Введите 3 числа через запятую: ').split(',')
-my_func(int(numbers[0]), int(numbers[1]), int(numbers[2]))
+my_list = [el for el in range(20, 241) if el % 20 == 0 or el % 21 == 0]
+print(my_list)
