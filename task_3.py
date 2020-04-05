@@ -1,20 +1,31 @@
-# 3)	Создать текстовый файл (не программно), построчно записать фамилии сотрудников и величину их окладов
-# (не менее 10 строк). Определить, кто из сотрудников имеет оклад менее 20 тыс., вывести фамилии этих сотрудников.
-#     Выполнить подсчет средней величины дохода сотрудников.
-# Пример файла:
-# Иванов 23543.12
-# Петров 13749.32
+# 3)	Реализовать базовый класс Worker (работник), в котором определить атрибуты: name, surname, position
+# (должность), income (доход). Последний атрибут должен быть защищенным и ссылаться на словарь, содержащий
+# элементы: оклад и премия, например, {"wage": wage, "bonus": bonus}. Создать класс Position (должность)
+# на базе класса Worker. В классе Position реализовать методы получения полного имени сотрудника
+# (get_full_name) # и дохода с учетом премии (get_total_income). Проверить работу примера на реальных
+# данных # (создать экземпляры класса Position, передать данные, проверить значения атрибутов, вызвать
+# методы экземпляров).
 
 
-def read_file(file_name):
-    with open(file_name, 'r', encoding='utf-8') as f_obj:
-        return f_obj.read()
+class Worker:
+
+    def __init__(self, name, surname, position, wage, bonus):
+        self.name = name
+        self.surname = surname
+        self.position = position
+        self._income = {"wage": wage, "bonus": bonus}
 
 
-content = read_file('text_3.txt').split()
-average_salary = sum([float(el) for num, el in enumerate(content) if num % 2 != 0])/(len(content)/2)
-top_salary = [content[num - 1] + ' ' + content[num] for num, el in enumerate(content) if num % 2 != 0 and float(el) > 20000]
+class Position(Worker):
 
-print('Средний доход всех сотрудников: ', average_salary)
-print('Более 20 тыс. зарабатывают: ')
-[print(el) for el in sorted(top_salary)]
+    def get_full_name(self):
+        return self.surname + ' ' + self.name
+
+    def get_total_income(self):
+        return self._income['wage'] + self._income['bonus']
+
+
+employee = Position('Иван', 'Иванов', 'Охранник', 10000, 5000)
+
+print(employee.get_full_name())
+print(employee.get_total_income())
