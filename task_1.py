@@ -1,35 +1,32 @@
-# 1. Реализовать класс Matrix (матрица). Обеспечить перегрузку конструктора класса (метод init()), который должен
-# принимать данные (список списков) для формирования матрицы.
-# Подсказка: матрица — система некоторых математических # величин, расположенных в виде прямоугольной схемы.
-# Примеры матриц вы найдете в методичке.
-# Следующий шаг — # реализовать перегрузку метода str() для вывода матрицы в привычном виде. Далее реализовать
-# перегрузку метода add() # для реализации операции сложения двух объектов класса Matrix (двух матриц). Результатом
-# сложения должна быть новая # матрица. Подсказка: сложение элементов матриц выполнять поэлементно — первый элемент
-# первой строки первой матрицы # складываем с первым элементом первой строки второй матрицы и т.д.
-from functools import reduce
+# Реализовать класс «Дата», функция-конструктор которого должна принимать дату в виде строки формата
+# «день-месяц-год». В рамках класса реализовать два метода. Первый, с декоратором @classmethod, должен извлекать
+# число, месяц, год и преобразовывать их тип к типу «Число». Второй, с декоратором @staticmethod, должен проводить
+# валидацию числа, месяца и года (например, месяц — от 1 до 12). Проверить работу полученной структуры на реальных
+# данных.
 
 
-class Matrix:
+class Date:
 
-    def __init__(self, my_list):
-        self.my_list = my_list
+    def __init__(self, str_date):
+        self.str_date = str_date
 
-    def __str__(self):
-        return 'Матрица:\n' + '\n'.join(' '.join(map(str, line)) for line in self.my_list) + '\n'
+    @classmethod
+    def ext_date(cls, param):
+        day, month, year = map(int, param.split('-'))
+        return day, month, year
 
-    def __add__(self, other):
-        for i in range(0, len(self.my_list)):
-            for l in range(0, len(self.my_list[i])):
-                self.my_list[i][l] = self.my_list[i][l] + other.my_list[i][l]
-        return Matrix(self.my_list)
+    @staticmethod
+    def valid_date(str_date):
+        list_date = Date.ext_date(str_date)
+        return True if 0 < list_date[0] <= 31 and 0 < list_date[1] <= 12 and 1900 < list_date[2] <= 2020 else False
+
+    def valid_date_norm(self):
+        print('Корректная дата') if Date.valid_date(self.str_date) else print('Некорректная дата')
 
 
-my_matrix1 = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-my_matrix2 = [[10, 11, 12], [13, 14, 15], [16, 17, 18]]
-
-m1 = Matrix(my_matrix1)
-m2 = Matrix(my_matrix2)
-
-print(m1)
-print(m2)
-print(m1 + m2)
+if __name__ == '__main__':
+    my_date = Date('28-12-2019')
+    print('Извлекаем дату: ')
+    print(my_date.ext_date(my_date.str_date))
+    print('Проверяем дату: ')
+    my_date.valid_date_norm()
